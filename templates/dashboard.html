@@ -1,0 +1,41 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Student Dashboard</h2>
+    <h4>Available Tests</h4>
+    <ul class="list-group mb-4">
+        {% for test in tests %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ test.name }}
+                <a href="{{ url_for('view_test', test_id=test.id) }}" class="btn btn-primary">Take Test</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+<!-- templates/admin_dashboard.html -->
+<h4>Submitted Reports</h4>
+<ul class="list-group">
+    {% for response in responses %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ response.user.username }} - {{ response.test.name }}
+            {% if response.report_path %}
+                <a href="{{ url_for('download_report', filename=response.report_path) }}" class="btn btn-link">Download Report</a>
+            {% else %}
+                <span>No report available</span>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
